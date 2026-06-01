@@ -17,15 +17,17 @@ let anotherNumber = "";
 let displayValue = '0';
 //a funtion that takes an operator and two numbers
 function operate(operator, num1, num2) {
+    const n1 = Number(num1);
+    const n2 = Number(num2);
     switch (operator) {
     case '+':
-      return add(num1, num2);
+      return add(n1, n2);
     case '-':
-      return subtract(num1, num2);
+      return subtract(n1, n2);
     case '*':
-      return multiply(num1, num2);
+      return multiply(n1, n2);
     case '/':
-      return num2 === 0 ? "ERROR" : divide(num1, num2);
+      return n2 === 0 ? "ERROR" : divide(n1, n2);
     default:
       return "Invalid operator";
     }
@@ -59,24 +61,21 @@ function updateDisplay() {
   displayElement.textContent = displayValue;
 };
 
-const digitButtons = document.querySelectorAll('.number');
-    digitButtons.forEach(button => {
-    button.addEventListener('click', () => {
-    const digitValue = button.textContent.trim();
-    checkDigitClick(digitValue);
-    updateDisplay()
-  });
-});
 //handle when an operator button is clicked
 function checkOperatorClick(selectedOperator) {
-    if(firstNumber !== "") {
+    if (firstNumber !== "" && anotherNumber !== "") {
+        const result = operate(operator, Number(firstNumber), Number(anotherNumber));
+        displayValue = result;
+        updateDisplay();
+        // Save the result as the new firstNumber for the NEXT calculation
+        firstNumber = result.toString();
+        anotherNumber = ""; 
+    }
+    if (firstNumber !== "") {
         operator = selectedOperator;
     }
+
 };
-
-
-//store the first and second numbers input by the user
-//then operate() on them when the user presses the = button
 function handleEqualTo() {
     if(firstNumber === "" || anotherNumber === "" || !operator) {
         return;
@@ -89,6 +88,15 @@ function handleEqualTo() {
     anotherNumber = "";
     operator = null;
 }
+// add event listener for the numbers button
+const digitButtons = document.querySelectorAll('.number');
+    digitButtons.forEach(button => {
+    button.addEventListener('click', () => {
+    const digitValue = button.textContent.trim();
+    checkDigitClick(digitValue);
+    updateDisplay()
+  });
+});
 //add eventlisteniner to the operator button
 const operatorButtons = document.querySelectorAll(".operator")
     operatorButtons.forEach(button => {
@@ -101,4 +109,17 @@ const operatorButtons = document.querySelectorAll(".operator")
 const equalsButton = document.querySelector('.equal-to');
 equalsButton.addEventListener('click', () => {
     handleEqualTo();
+});
+//work on the clear button action
+function handleClearClick() {
+    firstNumber = "";
+    anotherNumber = "";
+    operator = null;
+    displayValue = "0";
+    updateDisplay(); 
+}
+//add event listener
+const clearButton = document.querySelector('.clear');
+clearButton.addEventListener('click', () => {
+    handleClearClick();
 });
