@@ -13,7 +13,7 @@ body {
     color: #ffffff;
 }
 .calculator {
-    width: 400px;
+    width: 350px;
     border-radius: 10px;
     background-color: #000000;
 }
@@ -23,7 +23,9 @@ body {
     font-weight: 100;
     text-align: right;
     padding-top: 30px;
-    padding-right: 60px;
+    padding-right: 50px;        
+    overflow-x: auto;     
+    white-space: nowrap;
 }
 .one, .two, .three, .four, .five {
     display: flex;

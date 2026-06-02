@@ -216,7 +216,7 @@ window.addEventListener('keydown', (e) => {
         e.preventDefault(); 
         checkOperatorClick(e.key);
     }
-    //handle Equal Sign / Enter
+    //use enter key for =
     if (e.key === '=' || e.key === 'Enter') {
         e.preventDefault(); //prevents Enter from re-triggering the last focused button
         handleEqualTo();
